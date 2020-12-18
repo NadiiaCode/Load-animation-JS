@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Load animation</title>
+  </head>
+  <body>
+    <canvas id="circle"></canvas>
+    <style>
+      body {
+        margin: 0;
+        padding: 0px;
+        width: 100vw;
+        height: 100vh;
+        background: #1f1216;
+      }
+    </style>
+
+    <script>
+      "use strict";
+      var W,
+        H,
+        R,
+        S,
+        i = 0;
+
+      window.onload = function () {
+        var cnv = document.getElementById("circle");
+        var ctx = cnv.getContext("2d");
+        function init() {
+          W = window.innerWidth;
+          H = window.innerHeight;
+          cnv.width = W;
+          cnv.height = H;
+          R = W < H ? W / 2 : H / 2;
+          S = (2 * Math.PI * R) / 360;
+        }
+        init();
+        ctx.translate(W / 2, H / 2);
+
+        var round = Math.PI / 180;
+
+        function animate() {
+          if (i < 720) {
+            ctx.fillStyle = `hsl(${i}deg,100%,50%)`;
+            ctx.fillRect(-S / 2, -R, S, R);
+            ctx.rotate(round);
+
+            ctx.fillStyle = "#1f1216";
+            ctx.beginPath();
+            ctx.arc(0, 0, R / 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          i++;
+          window.requestAnimationFrame(animate);
+        }
+        animate();
+      };
+    </script>
+  </body>
+</html>
